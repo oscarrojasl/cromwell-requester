@@ -8,7 +8,7 @@ class CromwellRequester:
     def __init__(self):
         self.CROMWELL_URL = 'http://localhost:8000'
         self.API_VERSION = 'v1'
-        self.Logging = Logging('CromwellRequester', to_screen=False, screen_level='INFO')
+        self.Logging = Logging('CromwellRequester', to_screen=True, screen_level='ERROR')
         if not self.check_cromwell_running():
             self.Logging.critical("Cromwell is not running. Server URL: " + self.CROMWELL_URL)
             sys.exit()
