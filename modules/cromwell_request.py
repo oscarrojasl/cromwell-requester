@@ -35,13 +35,16 @@ class CromwellRequester:
         except json.JSONDecodeError:
             self.Logging.critical(f"Could not be decoded into json: {exec_output}")
 
+    def get_log(self, execution_id):
+        return self.execute(self.base_get_command(execution_id, 'logs'))
+
     def base_get_command(self, execution_id, option):
         api_route = f'/api/workflows/{self.API_VERSION}/{execution_id}/{option}'
-        return f"curl -s -X 'GET' '{self.CROMWELL_URL}/{api_route} ' -H 'accept: application/json'"
+        return f"curl -s -X 'GET' '{self.CROMWELL_URL + api_route}' -H 'accept: application/json'"
 
     def base_post_command(self, execution_id, option):
         api_route = f'/api/workflows/{self.API_VERSION}/{execution_id}/{option}'
-        return f"curl -s -X 'POST' '{self.CROMWELL_URL}/{api_route} ' -H 'accept: application/json' -d ''"
+        return f"curl -s -X 'POST' '{self.CROMWELL_URL +api_route}' -H 'accept: application/json' -d ''"
 
     def check_cromwell_running(self):
         api_route = f'/engine/{self.API_VERSION}/version'
