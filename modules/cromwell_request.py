@@ -23,7 +23,8 @@ class CromwellRequester:
         if inputs:
             curl_command += f"-F 'workflowInputs=@{inputs};type=application/json' "
         if options:
-            curl_command += f"-F 'workflowOptions=@{options};type=application/json''"
+            curl_command += f"-F 'workflowOptions=@{options};type=application/json'"
+        self.Logging.debug(f"Submit command: {curl_command}")
         exec_output = self.execute(curl_command)
         try:
             response = json.loads(exec_output)
