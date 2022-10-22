@@ -29,7 +29,6 @@ class Logging:
         if self.to_screen:
             stream_handler = logging.StreamHandler(sys.stdout)
             stream_handler.setLevel(self.screen_level)
-            stream_handler.setFormatter(formatter)
             self.logger.addHandler(stream_handler)
 
     def debug(self, message):
