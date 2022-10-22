@@ -38,6 +38,18 @@ class CromwellRequester:
     def get_log(self, execution_id):
         return self.execute(self.base_get_command(execution_id, 'logs'))
 
+    def get_status(self, execution_id):
+        return self.execute(self.base_get_command(execution_id, 'status'))
+
+    def get_outputs(self, execution_id):
+        return self.execute(self.base_get_command(execution_id, 'outputs'))
+
+    def get_metadata(self, execution_id):
+        return self.execute(self.base_get_command(execution_id, 'metadata'))
+
+    def abort_execution(self, execution_id):
+        return self.execute(self.base_post_command(execution_id, 'abort'))
+
     def base_get_command(self, execution_id, option):
         api_route = f'/api/workflows/{self.API_VERSION}/{execution_id}/{option}'
         return f"curl -s -X 'GET' '{self.CROMWELL_URL + api_route}' -H 'accept: application/json'"
