@@ -22,10 +22,14 @@ class CromwellRequester:
             curl_command += f"-F 'workflowInputs=@{inputs};type=application/json' "
         if options:
             curl_command += f"-F 'workflowOptions=@{options};type=application/json''"
-        response = json.loads(self.execute(curl_command))
-        message = f"Execution id:\t{response['id']} \nStatus:\t{response['status']}"
-        self.Logging.info(message)
-        print(message)
+        exec_output = self.execute(curl_command)
+        try:
+            response = json.loads(exec_output)
+            message = f"Execution id:\t{response['id']} \nStatus:\t{response['status']}"
+            self.Logging.info(message)
+            print(message)
+        except json.JSONDecodeError:
+            self.Logging.critical(f"Could not be decoded into json: {exec_output}")
 
     def check_cromwell_running(self):
         api_route = f'/engine/{self.API_VERSION}/version'
