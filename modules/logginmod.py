@@ -22,7 +22,7 @@ class Logging:
         formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s',
                                         '%Y-%m-%d %H:%M:%S')
         if self.to_file:
-            file_handler = logging.FileHandler(filename=f'{self.logs_dir}{self.logger_name}.log')
+            file_handler = logging.FileHandler(filename=f'{self.logs_dir}/{self.logger_name}.log')
             file_handler.setLevel(self.file_level)
             file_handler.setFormatter(formatter)
             self.logger.addHandler(file_handler)
