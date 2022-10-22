@@ -31,6 +31,7 @@ class CromwellRequester:
             message = f"Execution id:\t{response['id']} \nStatus:\t{response['status']}"
             self.Logging.info(message)
             print(message)
+            return response['id']
         except json.JSONDecodeError:
             self.Logging.critical(f"Could not be decoded into json: {exec_output}")
 
