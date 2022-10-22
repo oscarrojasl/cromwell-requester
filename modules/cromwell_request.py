@@ -1,13 +1,16 @@
 import subprocess
 import sys
+import json
+from modules.logginmod import Logging
 
 
 class CromwellRequester:
     def __init__(self):
         self.CROMWELL_URL = 'http://localhost:8000'
         self.API_VERSION = 'v1'
+        self.Logging = Logging('CromwellRequester', to_screen=False, screen_level='INFO')
         if not self.check_cromwell_running():
-            print("Cromwell is not running. Server URL: "+self.CROMWELL_URL)
+            self.Logging.critical("Cromwell is not running. Server URL: " + self.CROMWELL_URL)
             sys.exit()
 
     def submit_workflow(self, workflow, inputs=None, options=None):
@@ -19,7 +22,10 @@ class CromwellRequester:
             curl_command += f"-F 'workflowInputs=@{inputs};type=application/json' "
         if options:
             curl_command += f"-F 'workflowOptions=@{options};type=application/json''"
-        response = self.execute(curl_command)
+        response = json.loads(self.execute(curl_command))
+        message = f"Execution id:\t{response['id']} \nStatus:\t{response['status']}"
+        self.Logging.info(message)
+        print(message)
 
     def check_cromwell_running(self):
         api_route = f'/engine/{self.API_VERSION}/version'
