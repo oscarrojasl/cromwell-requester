@@ -12,6 +12,8 @@ class CromwellRequester:
         if not self.check_cromwell_running():
             self.Logging.critical("Cromwell is not running. Server URL: " + self.CROMWELL_URL)
             sys.exit()
+        else:
+            self.Logging.debug("Cromwell is running")
 
     def submit_workflow(self, workflow, inputs=None, options=None):
         api_route = f'/api/workflows/{self.API_VERSION}'
