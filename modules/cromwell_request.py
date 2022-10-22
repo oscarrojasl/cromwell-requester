@@ -15,7 +15,7 @@ class CromwellRequester:
 
     def submit_workflow(self, workflow, inputs=None, options=None):
         api_route = f'/api/workflows/{self.API_VERSION}'
-        curl_command = f"curl -X 'POST' '{self.CROMWELL_URL+api_route}' -H 'accept: application/json' " \
+        curl_command = f"curl -s -X 'POST' '{self.CROMWELL_URL + api_route}' -H 'accept: application/json' " \
                        f"-H 'Content-Type: multipart/form-data' " \
                        f"-F 'workflowSource=@{workflow}' "
         if inputs:
@@ -29,11 +29,10 @@ class CromwellRequester:
 
     def check_cromwell_running(self):
         api_route = f'/engine/{self.API_VERSION}/version'
-        command = f"curl -s -X 'GET' '{self.CROMWELL_URL+api_route}' -H 'accept: application/json'"
+        command = f"curl -s -X 'GET' '{self.CROMWELL_URL + api_route}' -H 'accept: application/json'"
         return bool(self.execute(command))
 
     @staticmethod
     def execute(command):
         execution = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
         return execution.stdout.read().decode()
-
