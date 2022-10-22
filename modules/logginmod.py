@@ -32,16 +32,16 @@ class Logging:
             self.logger.addHandler(stream_handler)
 
     def debug(self, message):
-        self.logger.debug(message)
+        self.logger.debug(message.replace('\n', ''))
 
     def info(self, message):
-        self.logger.info(message)
+        self.logger.info(message.replace('\n', ''))
 
     def warning(self, message):
-        self.logger.warning(message)
+        self.logger.warning(message.replace('\n', ''))
 
     def error(self, message):
-        self.logger.error(message)
+        self.logger.error(message.replace('\n', ''))
 
     def critical(self, message):
-        self.logger.critical(message)
+        self.logger.critical(message.replace('\n', ''))
